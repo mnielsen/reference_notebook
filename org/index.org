@@ -1,0 +1,608 @@
+* Reference Notebook
+** Emacs
+** Git and GitHub
+*** Installation
+#+BEGIN_SRC shell
+sudo apt-get install git-core
+#+END_SRC
+
+On first install:
+#+BEGIN_SRC shell
+git config --global user.name "Michael Nielsen"
+git config --global user.email "mn@michaelnielsen.org"
+git config --global core.editor emacs
+git config --global alias.co checkout
+#+END_SRC
+
+To check the values:
+#+BEGIN_SRC shell
+git config user.email
+-> mn@michaelnielsen.org
+git config --list
+-> user.name=Michael Nielsen
+-> user.email=mn@michaelnielsen.org
+-> ...
+#+END_SRC
+
+Setting up ssh keys: [[http://help.github.com/linux-set-up-git/][follow GitHub's helpful guide]].
+
+*** Setting up a new local repository
+#+BEGIN_SRC shell
+git init
+touch README.md
+git add .
+git commit –am "First commit."
+#+END_SRC
+*** Setting up a repo on GitHub
+
+Create the github repository [[https://github.com/repositories/new][here]].
+
+If working on Windows, start pageant, and add appropriate ssh key.
+
+#+BEGIN_SRC shell
+git remote add origin git@github.com:mnielsen/repo.git
+git push origin master
+#+END_SRC
+*** Cloning a repository
+
+Create a local directory named project_name, and set up the relevant
+repository:
+#+BEGIN_SRC shell
+git clone git://github.com/user/project_name.git
+#+END_SRC
+*** Working with repositories
+**** Basic workflow commands
+
+Check the current status --- what's been modifed, what is being
+staged, what files are untracked, and so on: =git status=.
+
+Add all files to the next commit: =git add .=.
+
+Adding a specific untracked file: =git add [FILENAME]=
+
+Commit all currently tracked files: =git commit -am [MESSAGE]=.  This
+lets us skip staging, if the only files changed are already tracked.
+
+Push to remote: =git push=.
+
+**** Every committing and working with files
+
+The changes between working and staged: =git diff=
+
+The changes between staged and committed: =git diff --staged=.
+
+Delete a file: =git rm [FILE]=.  Add the =–f= option to force removal of a file that's been changed.
+
+Sometimes you want to untrack a file, but not actually delete the
+physical file.  Here's a way of doing this: =git rm –cached [FILE]=.
+
+Move a file: =git mv [OLDFILE] [NEWFILE]=
+
+Amend a commit:
+#+BEGIN_SRC shell
+git commit –am “message”
+git add [FORGOTTEN FILES]
+git commit --amend
+#+END_SRC
+
+Getting help: =git command --help=.
+
+
+**** Logs
+View log of commits: =git log=
+
+View last commit: =git log -1 HEAD=
+
+Log of commits: =git log [-n] [-p] [--stat]=. =[-n]= is an optional
+command, showing the last =n= commit, where =n= is an actual number,
+i.e., 1, 2, 3, etc.  =[-p]= means to show the diffs.  =[--stat]= shows
+stats.
+
+=HEAD= is a pointer to the local branch.
+
+Unstaging a file: =git reset HEAD [FILE]=.  After this, the file is
+now merely modified, but not yet staged.
+
+Discarding changes made to a modified (but not yet committed) file:
+=git checkout -- [FILE]=. This cannot be undone. 
+
+**** Tracking activity
+
+#+BEGIN_SRC shell
+git diff --shortstat "@{1 day ago}..HEAD"
+git diff --shortstat "@{3 weeks ago}..@{1 week ago}"
+git diff --shortstat "@{January 1}..@{10 days ago}"
+#+END_SRC
+
+Other options for =diff=: =--numstat= (report file by file).
+
+
+**** Ignoring files
+Add lines like the following to =.gitignore=:
+#+BEGIN_EXAMPLE
+*file*
+dir/*
+#+END_EXAMPLE
+
+**** Branches
+
+Creating a new branch: =git branch [BRANCH]=
+
+Viewing local branches: =git branch=
+
+Viewing all branches, local and remote: =git branch -r=.  Note that
+remote branches like =origin/master= are not the same as the local
+branch =master=.
+
+Change branch: =git checkout [BRANCH]=.  Note that this changes which
+branch HEAD points to.
+
+Create and change branch at the same time: =git checkout –b [BRANCH]=.
+
+Merging a branch’s changes into the current branch: =git merge
+[BRANCH]=.  If the merge fails, then you can run =git status= to see
+what has failed to merge.  Then edit the relevant files to resolve the
+conflicts.  Once the conflict is resolved, use =git add [FILE]= to
+mark it as resolved.
+
+To see the last commit on each branch: =git branch –v=
+
+Which branches have been merged into the current branch: =git branch
+--merged=.  These branches are good candidates for deletion. 
+
+Which branches haven't been merged into the current branch: =git
+branch--no-merged=.
+
+Delete a branch: =git branch –d [BRANCH]=.  Do this when the branch is
+no longer needed.  This will fail if the branch hasn’t been merged in
+yet.  
+
+Force a deletion: =git branch -D [BRANCH]=.
+
+**** Remotes
+Show git remotes: =git remote=.  
+
+Showing details of remotes: =git remote show [REMOTE-NAME]=
+
+Adding a git remote: =git remote add [NAME] [URL]=.  This way you can
+keep track of other people’s work, and fetch it when you want.
+
+In particular, you can run: =git fetch [NAME]=. This sets up a new
+local branch with a suitable name --- run =git branch= to figure out
+what the new branch is.  You can then merge in changes from that
+branch, or check out those branches, or whatever you wish to do. Note
+that =git fetch= does not merge anything in to your work, you need to
+do that manually.
+
+Pushing back to a remote server: =git push [SERVER-NAME]
+[BRANCH-NAME]=.  This can fail if someone has pushed before you to
+that server and branch. XXX - what to do then (fetch and merge?)
+
+Renaming remote:
+git remote rename [REMOTE-NAME] [NEW-NAME]
+
+Removing remote:
+git remote rm [REMOTE-NAME]
+
+To fetch everything from a remote:
+git fetch REMOTE
+
+To work on the newly-fetched remote:
+git checkout –b NEWBRANCH REMOTE/BRANCH
+
+Deleting remote branch:
+git push origin :REMOTEBRANCH
+
+Pushing the branch to a remote repository
+git push origin remote-name
+
+Pulling a new branch from a remote repository
+git fetch origin [remote-branch]:[new-local-branch]
+
+**** Tags
+Seeing all tags: =git tag=.  
+
+To search for tags that satisfy a pattern: =git tag -l [GLOB]=.
+
+Creating a tag: =git tag -a [TAG] -m [MESSAGE]=
+
+** Java
+*** Version
+java -version
+** Markdown
+John Gruber's original post: http://daringfireball.net/projects/markdown/syntax
+
+Syntax: http://daringfireball.net/projects/markdown/syntax
+
+Headlines:
+# H1
+## H2
+### etc
+
+Blockquote:
+> 123
+> 456
+** MySQL
+*** Installation
+#+BEGIN_SRC shell
+sudo apt-get install -y -qq mysql-server
+sudo apt-get install -y python-mysqldb
+#+END_SRC
+*** Configuration and logs
+#+BEGIN_SRC shell
+/etc/mysql/my.cnf
+/etc/mysql/conf.d/*
+/var/log/mysql/error.log
+/var/log/mysql.err
+/var/log/mysql.log
+#+END_SRC
+*** Basic useage
+
+=HELP COMMAND;=, e.g., =HELP SHOW;=.
+
+=USE db_name;=
+
+=show tables;=
+
+=show databases;=
+
+=show table status [from DATABASE] [like 'pattern' | where EXPRESSION];=
+
+=show global status= (will show connections, amongst other things)
+
+
+*** Setting up a database
+#+BEGIN_SRC mysql
+create database NAME;
+use NAME;
+create table TABLE (id INT NOT NULL AUTO_INCREMENT, field1 text, field2 int, PRIMARY KEY (id));
+create index INDEX_NAME on TABLE (field1(255));
+#+END_SRC
+
+*** Recipe: using /mnt on EC2 to store data
+
+#+BEGIN_SRC shell
+# Make it so MySQL uses /mnt to store data.  Also disables
+# AppArmor for MySQL.  Ideally I'd modify the
+# configuration file to include /mnt/mysql, but in the meantime
+# this is okay.
+sudo stop mysql
+sudo mv /var/lib/mysql /mnt/mysql
+sudo ln -s /mnt/mysql /var/lib/mysql
+sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/
+sudo apparmor_parser -R /etc/apparmor.d/usr.sbin.mysqld
+sudo start mysql
+#+END_SRC
+*** Recipe: InnoDB configuration
+
+InnoDB starts out misconfigured.  Use the following shell commands in conjunction with the file innodb.cnf below.  Note that the final three lines 
+
+#+BEGIN_SRC shell
+sudo stop mysql
+sudo mv innodb.cnf /etc/mysql/conf.d/innodb.cnf
+sudo rm -f /mnt/mysql/ib_logfile0
+sudo rm -f /mnt/mysql/ib_logfile1
+sudo rm -f /mnt/mysql/ibdata1
+sudo start mysql
+#+END_SRC
+
+The file innodb.cnf is as follows:
+#+BEGIN_SRC shell
+# MySQL database server configuration file, to be stored in
+# /var/log/mysql/conf.d/innodb.cnf.  The settings are based on the
+# article at:
+#
+# http://www.mysqlperformanceblog.com/2007/11/01/innodb-performance-optimization-basics/
+
+[mysqld]
+innodb_buffer_pool_size		= 1G # let's say 50-70% of memory
+innodb_log_file_size 		        = 128M # 1/8-1/4 of innodb_buffer_pool_size
+innodb_log_buffer_size		= 4M
+innodb_flush_log_at_trx_commit	= 2
+innodb_thread_concurrency 	        = 8
+innodb_flush_method		        = O_DIRECT
+innodb_file_per_table		        = true
+#+END_SRC
+** Org-mode
+*** Code
+Inline, use
+*** Hyperlinks
+C-c C-o: follow a hyperlink
+C-c l: store a hyperlink
+C-c C-l: insert the stored hyperlink
+
+** Python
+*** Basic python
+**** Inputting a string in python				   :python:string;:
+This is something I find surprisingly difficult to recall:
+#+BEGIN_SRC python
+x = raw_input(prompt)
+#+END_SRC
+The string is returned with the =\n= stripped.
+
+**** Lists
+***** Creating a list containing many copies of an object
+This is a standard gotcha in python. Suppose we wanted to create a list with 3 copies of the empty list. You might think we'd do:
+#+BEGIN_SRC python
+l = [ [] ]*3
+#+END_SRC
+Unfortunately, this creates a problem, which is that every entry in
+the list is the same object (i.e., has the same object id). This means
+that modifications to one will affect all:
+#+BEGIN_SRC python
+l[0].append("Hi")
+#+END_SRC
+will return =[ ["Hi"], ["Hi"], ["Hi"] ]=, not =[ ["Hi"], [], [] ]=,
+which is what we were after. The solution is to create =l= using
+something like:
+#+BEGIN_SRC python
+l = [ [] for j in range(3)]
+#+END_SRC
+Note that although I've used the empty list above, the same remarks
+for any Python object.
+
+***** Flattening a list
+#+BEGIN_SRC python
+import itertools
+
+def flatten_list(x):
+    """
+    Return a flattened version of the list x.  So, for example, if 
+    x = [[1,[2]],3] then return [1,2,3].
+    """
+    return list(itertools.chain(*x))
+#+END_SRC
+
+*** Recipes
+**** Counting lines of code
+For a single file:
+#+BEGIN_SRC shell
+sed '/^\s*#/d;/^\s*$/d' FILE.py | wc -l
+#+END_SRC
+For multiple files:
+#+BEGIN_SRC shell
+sed '/^\s*#/d;/^\s*$/d' *.py */*.py */*/*.py | wc -l
+#+END_SRC
+**** Creating a directory
+The advantage of the following is that it works even when the
+directory already exists.
+#+BEGIN_SRC python
+def mkdir(dir_name):
+    """
+    Make a directory with name dir_name.  Does not raise an exception if
+    the directory already exists.
+    """
+    try:
+        os.mkdir(dir_name)
+    except OSError:
+        pass
+#+END_SRC
+
+**** Catching exceptions in procedures nested inside loops
+Conside the following possible Python idiom:
+#+BEGIN_SRC python
+def proc():
+    try:
+        something
+    except Exception:
+        catch
+        continue
+
+for j in range(100):
+    proc()
+#+END_SRC
+Unfortunately, this isn't valid Python code.  It would be if we
+inserted the full procedure definition into the loop, but
+unfortunately the ``continue`` keyword isn't allowed outside the body
+of the ``for`` loop.  In particular, it's not allowed inside a called
+procedure.
+
+A way of dealing with this is as follows:
+#+BEGIN_SRC python
+class ContinueException(Exception):
+    """
+    A kludge used because Python won't allow us to ``continue`` when
+    an exception is caught in a procedure called from a loop.
+
+    To solve this problem, ContinueException is raised as the final
+    step in exception handling by the procedure.  This passes control
+    back to the exception handling in the main loop, which then
+    ``continue``s with the next step in the loop.
+
+    It's not pretty, but it works, and seems to be better than the
+    alternatives.  In particular, it lets us modularize the exception
+    handling, which makes it a lot easier to understand.
+    """
+    pass
+
+def proc():
+    try:
+        something
+    except Exception:
+        catch
+        raise ContinueException
+
+for j in range(100):
+    try:
+        proc()
+    except ContinueException:
+        continue
+#+END_SRC
+It's not too elegant, but also not too bad --- basically a two-stage
+way of continuing the ``for`` loop. An analogous idea can be used with
+conditions where we want to ``break`` out of the ``for`` loop.
+**** Getting a domain name
+#+BEGIN_SRC python
+from urlparse import urlparse
+
+def domain(url):
+    """
+    Return the domain associated to a url.
+    """
+    return urlparse(url).netloc
+#+END_SRC
+    
+**** Memory useage
+Use the ``heapy`` package, whose webpage is [[http://guppy-pe.sourceforge.net/#Heapy][here]].  To install
+``heapy``:
+#+BEGIN_SRC shell
+sudo apt-get install subversion
+svn co https://guppy-pe.svn.sourceforge.net/svnroot/guppy-pe/trunk/guppy guppy
+cd guppy
+sudo python setup.py install
+#+END_SRC
+At the place I want a dump of the heap:
+#+BEGIN_SRC python
+from guppy import hpy
+h = hpy()
+print h.heap()
+#+END_SRC
+**** Removing a file
+The naive way of doing this is:
+#+BEGIN_SRC python
+import os
+
+os.remove(filename)
+#+END_SRC
+The problem with this is that it can fail if a file with the
+appropriate name does not exist.  For that reason it's not
+recommended.  There are two ways of avoiding this problem.  The first
+is:
+#+BEGIN_SRC python
+import os
+
+if os.path.exists(filename):
+    os.remove(filename)
+#+END_SRC
+This is an improvement, but has the problem that it may fail if the
+file is deleted in the (admittedly very small) time between when the
+if statement is executed and the next line.  A way to avoids this
+problem is the following:
+#+BEGIN_SRC python
+import os
+
+try:
+    os.remove(filename)
+except OSError:
+    pass
+#+END_SRC
+This is somewhat ugly, but in my opinion is probably the best approach, since it avoids both the problems described above.  It may be best to factor it out as a separate function:
+#+BEGIN_SRC python
+import os
+
+def remove_files(*args):
+    """
+    Remove the files listed in ``*args``, without raising an exception
+    if any of those files do not exist.
+    """
+    for filename in args:
+        try:
+            os.system("rm %s" % filename)
+        except OSError:
+            pass
+
+remove_file(filename)
+#+END_SRC
+Note that I have made one extra change in this function, which is to
+replace ``os.remove`` by an ``os.system`` call.  The reason for doing
+this is that the ``os.system`` approach allows us to use globs, which
+is often useful.
+
+
+*** Standard library
+**** urllib2
+#+BEGIN_SRC python
+import urllib2
+
+content = urllib2.urlopen(url)
+page = content.read()
+#+END_SRC
+
+*** Third-party libraries
+**** lxml
+***** Installation
+
+#+BEGIN_SRC shell
+sudo apt-get install libxml2
+sudo apt-get install libxml2-dev
+sudo apt-get install libxslt-dev
+sudo apt-get install python-dev
+sudo apt-get install python-setuptools
+sudo easy_install lxml
+#+END_SRC
+
+***** Basic html parsing
+
+#+BEGIN_SRC python
+from lxml import etree
+import StringIO
+
+def parse_html(content):
+    """
+    content is the html content to parse.
+    """
+    parser = etree.HTMLParser()
+    return etree.parse(StringIO.StringIO(html), parser)
+#+END_SRC python
+
+**** Matplotlib
+***** Installation
+=sudo apt-get install -y python-matplotlib=
+
+***** Recipe for a scatter plot
+#+BEGIN_SRC python
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy
+
+# The number of points in the following arrays must be the same.  We will
+# plot (x[j],y[j])
+x = numpy.array(XXX)
+y = numpy.array(XXX) 
+
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.set_xlabel("X AXIS LABEL", fontsize=16)
+ax.set_ylabel("Y AXIS LABEL", fontsize=16)
+ax.set_title("TITLE", fontsize=20)
+# ax.set_xlim(XMIN, XMAX)
+# ax.set_ylim(YMIN, YMAX)
+ax.grid(True)
+ax.scatter(x, y, color="COLOR") # COLOR=tomato is nice
+fig.savefig("FILENAME.png")
+#+END_SRC
+
+**** Profiling in python
+
+To set up profiling, enable the multiverse on Ubuntu, by editing
+=/etc/apt/sources.list=, then =sudo apt-get update=, then =sudo
+apt-get install python-profiler=.
+
+To run a profile:
+#+BEGIN_SRC shell
+python –m cProfile –s cumulative –o output_file module.py
+#+END_SRC
+
+**** Redis
+** Solr
+*** Starting Solr
+``java -jar start.jar`` starts an instance on port 8983, running
+inside ``jetty``.
+*** Uses UTF-8 file encoding
+*** Changing to English tokenization
+English tokenization: edit ``solr/conf/schema.xml``, and then use the
+``text_en_splitting`` ``fieldType`` for the ``text`` and ``features``
+fields like so:
+
+#+BEGIN_SRC xml
+<field name="features" type="text_en_splitting" indexed="true" stored="true" multiValued="true"/>
+...
+<field name="text" type="text_en_splitting" indexed="true" stored="false" multiValued="true"/>
+#+END_SRC
+
+** System administration
+*** Updating the time
+#+BEGIN_SRC shell
+sudo ntpdate ntp.ubuntu.com
+#+END_SRC
