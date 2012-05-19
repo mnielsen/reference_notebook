@@ -1,5 +1,12 @@
 * Reference Notebook
 ** Emacs
+*** Org-mode
+**** Code
+Inline, use
+**** Hyperlinks
+C-c C-o: follow a hyperlink
+C-c l: store a hyperlink
+C-c C-l: insert the stored hyperlink
 ** Git and GitHub
 *** Installation
 #+BEGIN_SRC shell
@@ -8,20 +15,20 @@ sudo apt-get install git-core
 
 On first install:
 #+BEGIN_SRC shell
-git config --global user.name "Michael Nielsen"
-git config --global user.email "mn@michaelnielsen.org"
-git config --global core.editor emacs
-git config --global alias.co checkout
+$ git config --global user.name "Michael Nielsen"
+$ git config --global user.email "mn@michaelnielsen.org"
+$ git config --global core.editor emacs
+$ git config --global alias.co checkout
 #+END_SRC
 
 To check the values:
 #+BEGIN_SRC shell
-git config user.email
--> mn@michaelnielsen.org
-git config --list
--> user.name=Michael Nielsen
--> user.email=mn@michaelnielsen.org
--> ...
+$ git config user.email
+mn@michaelnielsen.org
+$ git config --list
+user.name=Michael Nielsen
+user.email=mn@michaelnielsen.org
+...
 #+END_SRC
 
 Setting up ssh keys: [[http://help.github.com/linux-set-up-git/][follow GitHub's helpful guide]].
@@ -205,7 +212,6 @@ Seeing all tags: =git tag=.
 To search for tags that satisfy a pattern: =git tag -l [GLOB]=.
 
 Creating a tag: =git tag -a [TAG] -m [MESSAGE]=
-
 ** Java
 *** Version
 java -version
@@ -303,14 +309,6 @@ innodb_thread_concurrency 	        = 8
 innodb_flush_method		        = O_DIRECT
 innodb_file_per_table		        = true
 #+END_SRC
-** Org-mode
-*** Code
-Inline, use
-*** Hyperlinks
-C-c C-o: follow a hyperlink
-C-c l: store a hyperlink
-C-c C-l: insert the stored hyperlink
-
 ** Python
 *** Basic python
 **** Inputting a string in python				   :python:string;:
