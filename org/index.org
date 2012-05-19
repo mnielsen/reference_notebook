@@ -35,10 +35,10 @@ Setting up ssh keys: [[http://help.github.com/linux-set-up-git/][follow GitHub's
 
 *** Setting up a new local repository
 #+BEGIN_SRC shell
-git init
-touch README.md
-git add .
-git commit –am "First commit."
+$ git init
+$ touch README.md
+$ git add .
+$ git commit –am "First commit."
 #+END_SRC
 *** Setting up a repo on GitHub
 
@@ -47,15 +47,15 @@ Create the github repository [[https://github.com/repositories/new][here]].
 If working on Windows, start pageant, and add appropriate ssh key.
 
 #+BEGIN_SRC shell
-git remote add origin git@github.com:mnielsen/repo.git
-git push origin master
+$ git remote add origin git@github.com:mnielsen/repo.git
+$ git push origin master
 #+END_SRC
 *** Cloning a repository
 
-Create a local directory named project_name, and set up the relevant
+Create a local directory named =project_name=, and set up the relevant
 repository:
 #+BEGIN_SRC shell
-git clone git://github.com/user/project_name.git
+$ git clone git://github.com/user/project_name.git
 #+END_SRC
 *** Working with repositories
 **** Basic workflow commands
