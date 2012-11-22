@@ -52,10 +52,10 @@ $ git push origin master
 #+END_SRC
 *** Cloning a repository
 
-Create a local directory named =project_name=, and set up the relevant
+Create a local directory named =$PROJECT_NAME=, and set up the relevant
 repository:
 #+BEGIN_SRC shell
-$ git clone git://github.com/user/project_name.git
+$ git clone git://github.com/$USERNAME/$PROJECT_NAME.git
 #+END_SRC
 *** Working with repositories
 **** Basic workflow commands
@@ -350,7 +350,7 @@ def flatten_list(x):
     """
     return list(itertools.chain(*x))
 #+END_SRC
-
+    
 *** Recipes
 **** Counting lines of code
 For a single file:
@@ -571,6 +571,13 @@ ax.scatter(x, y, color="COLOR") # COLOR=tomato is nice
 fig.savefig("FILENAME.png")
 #+END_SRC
 
+
+**** numpy
+=x.copy()=: return a deep copy of the array x
+=numpy.exp(z)= : returns exponential of z
+=numpy.random.uniform(a, b)= : returns random number in range a..b
+=numpy.random.uniform(a, b, size)= : returns an array of random numbers in range a..b.
+
 **** Profiling in python
 
 To set up profiling, enable the multiverse on Ubuntu, by editing
@@ -604,3 +611,6 @@ fields like so:
 #+BEGIN_SRC shell
 sudo ntpdate ntp.ubuntu.com
 #+END_SRC
+
+** Tikz
+
