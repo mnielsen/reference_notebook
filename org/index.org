@@ -613,4 +613,14 @@ sudo ntpdate ntp.ubuntu.com
 #+END_SRC
 
 ** Tikz
+The basic template:
+#+BEGIN_SRC latex
+\documentclass{article}
+\usepackage{tikz}
+\begin{document}
+\begin{tikzpicture}
+\draw (0,0) -- (1,1);
+\end{tikzpicture}
+\end{document}
 
+#+END_SRC
